@@ -57,51 +57,25 @@
         [self.delegate popularListError:error];
     }];
 }
-/*
--(void)getLocationsUsingEmail:(NSString *)email{
-    
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:self.Base_url]];
+-(void)searchUsingMovieName:(NSString *)movieQuery{
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{
-                                 @"email" :email,
-                                 };
-    [manager POST:self.User_Login_Location parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSString *urlString = [movieQuery stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+
+    NSString *url = [NSString stringWithFormat:@"%@%@?api_key=%@&query=%@",BASE_URL,SEARCH_MOVIE,API_KEY,urlString];
+    [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         if ([responseObject isKindOfClass:[NSArray class]])
-         {
-             [self.delegate userLocationUsingEmailSucess:responseObject];
-         }
-         else if([responseObject isKindOfClass:[NSDictionary class]]){
-             
-         }
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
-         [self.delegate userLocationUsingEmailError:error];
-     }];
-}
- 
--(void)loginUsingUserName:(NSString *)userName password:(NSString *)password locationID:(NSString *)locationID{
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:self.Base_url]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSDictionary *parameters = @{
-                                 @"email" :userName,
-                                 @"password" :password,
-                                 @"location" : locationID
-                                 };
-    [manager POST:User_Login parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"resoonse:%@",responseObject);
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            [self.delegate searchMovieSucess:responseObject[@"results"]];
+        }
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         if ([responseObject isKindOfClass:[NSDictionary class]]){
-             [self.delegate userLoginSucess:responseObject];
-         }
-     }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         [self.delegate userLoginError:error];
-     }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@",error.localizedDescription);
+        [self.delegate searchMovieError:error];
+    }];
 }
- */
+
 
 @end

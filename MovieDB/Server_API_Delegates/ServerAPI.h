@@ -15,6 +15,9 @@
 #define NOW_PLAYING @"/movie/now_playing"
 #define POPULAR @"/movie/popular"
 #define TOP_RATED @"/movie/top_rated"
+#define SEARCH_MOVIE @"/search/movie"
+
+
 
 
 
@@ -26,7 +29,10 @@
 
 -(void)getTopRated;
 -(void)getPopular;
+-(void)searchUsingMovieName:(NSString *)movieQuery;
+
 //-(void)getTopRated;
+
 
 
 /*

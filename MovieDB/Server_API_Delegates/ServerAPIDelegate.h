@@ -15,12 +15,13 @@
 -(void)topRatedListSucess:(NSArray *)response;
 -(void)topRatedListError:(NSError *)error;
 
-#pragma mark - User Login
+#pragma mark - Popular List
 -(void)popularListSucess:(NSArray *)response;
 -(void)popularListError:(NSError *)error;
 
-#pragma mark - User Profile
--(void)userGetProfileSucess:(NSDictionary *)response;
--(void)userGetProfileError:(NSError *)error;
+#pragma mark - Popular List
+-(void)searchMovieSucess:(NSArray *)response;
+-(void)searchMovieError:(NSError *)error;
+
 
 @end
